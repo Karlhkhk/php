@@ -6,17 +6,19 @@
     <title>Document</title>
 </head>
 <body>
-<form action="">
-        Start:<input type="time" name = "start" id=""><br>
-        Start:<input type="time" name = "start" id=""><br>
-
-</form>
-
+    <h1>harjutus 12</h1>
+    <form action="">
+        start: <input type="time" name="start" id=""><br>
+        finish: <input type="time" name="finish" id=""><br>
+        <input type="submit" value="leia aeg">
+    </form>
     <?php
-$s = "10:30";
+    $s=strtotime($_GET["start"]);
+    $f=strtotime($_GET["finish"]);
 
-
-
+    $diff=abs($s - $f)/3600*60;
+    echo intdiv($diff,60).":".$diff % 60;
+    
 ?>
 </body>
 </html>
