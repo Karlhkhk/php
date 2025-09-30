@@ -7,6 +7,24 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   </head>
   <body>
+    
+    <h1>Harjutus 14</h1>
+
+<?php
+$directory = 'pildid/';
+
+$images = glob($directory . '*.{jpg,jpeg}', GLOB_BRACE);
+
+if (count($images) > 0) {
+    $randomImage = $images[array_rand($images)];
+    
+    // Parandatud img element
+    echo '<img src="' . $randomImage . '" alt="Random Image" width="200" height="200">';
+} else {
+    echo 'ei ole pilti siin.';
+}
+?>
+<h1>Harjutus 13</h1>
      <div class="container">
         <?php
             $kataloog = 'pildid';
@@ -51,22 +69,6 @@
             }
         ?>
 
-    <h1>Harjutus 14</h1>
-
-<?php
-$directory = 'pildid/';
-
-$images = glob($directory . '*.{jpg,jpeg}', GLOB_BRACE);
-
-if (count($images) > 0) {
-    $randomImage = $images[array_rand($images)];
-    
-    // Parandatud img element
-    echo '<img src="' . $randomImage . '" alt="Random Image" width="200" height="200">';
-} else {
-    echo 'ei ole pilti siin.';
-}
-?>
  <h1>Harjutus 12.1</h1>
 <?php
 $allikas = 'tootajad.csv';
@@ -165,66 +167,23 @@ echo "Suurim naiste palk: " . number_format($suurimNaistePalk, 2) . " €<br>";
 ?>
 <h1>Harjutus 9</h1>
 
-<form method="post">
-    <label for="nimi">Sisesta oma nimi:</label>
-    <input type="text" id="nimi" name="nimi" required>
-    <br>
-    <label for="sisend">Sisesta sõna:</label>
-    <input type="text" id="sisend" name="sisend" required>
-    <br>
-    <label for="lauses">Sisesta lause:</label>
-    <input type="text" id="lauses" name="lauses" required>
-    <br>
-    <label for="eesnimi">Sisesta eesnimi:</label>
-    <input type="text" id="eesnimi" name="eesnimi" required>
-    <br>
-    <label for="perenimi">Sisesta perenimi:</label>
-    <input type="text" id="perenimi" name="perenimi" required>
-    <br>
-    <input type="submit" value="Saada">
-</form>
-
 <?php
-if ($_SERVER["REQUEST_METHOD"] == "POST") {
-    if (!function_exists('tervita')) {
-        function tervita($nimi) {
-            return "Tere, " . ucfirst(strtolower($nimi)) . "!";
+    function email(){
+        echo'    <form action="#" method="get">
+            Sisestage oma nimi <input type="text" name="nimi" required><br>
+            <input type="submit" value="Kontrolli">
+        </form>';
+        if(isset($_GET["nimi"])){
+            $nimi = $_GET["nimi"];
+            $nimi = mb_strtolower($nimi);
+            $asenda = array(" ", "ä", "ö", "ü", "õ");
+            $asendused = array(".", "a", "o", "y", "o");
+            $email = str_replace($asenda, $asendused, $nimi);
+            echo $email."@hkhk.edu.ee";
         }
     }
-
-    if (!function_exists('eraldaTähtedega')) {
-        function eraldaTähtedega($sisend) {
-            return implode('.', str_split(strtoupper($sisend)));
-        }
-    }
-
-    if (!function_exists('ropudsõnad')) {
-        function ropudsõnad($sisend, $ropud_sõnad) {
-            return str_replace($ropud_sõnad, '***', $sisend);
-        }
-    }
-
-    if (!function_exists('looMail')) {
-        function looMail($eesnimi, $perenimi) {
-            $eesnimi = str_replace(array('ä', 'ö', 'ü', 'õ'), array('a', 'o', 'y', 'o'), strtolower($eesnimi));
-            $perenimi = str_replace(array('ä', 'ö', 'ü', 'õ'), array('a', 'o', 'y', 'o'), strtolower($perenimi));
-            
-            return $eesnimi . $perenimi . "@hkhk.edu.ee";
-        }
-    }
-
-    $nimi = $_POST['nimi'];
-    $sisend = $_POST['sisend'];
-    $lauses = $_POST['lauses'];
-    $eesnimi = $_POST['eesnimi'];
-    $perenimi = $_POST['perenimi'];
-
-    echo tervita($nimi) . "<br>";
-    echo eraldaTähtedega($sisend) . "<br>"; 
-    echo ropudsõnad($lauses, array("lol")) . "<br>"; 
-    echo looMail($eesnimi, $perenimi); 
-}
-?>
+    email()
+    ?>
 
     <h1>Harjutus 08</h1>
 
@@ -548,16 +507,18 @@ $hiinanimi = array("瀚聪","月松","雨萌","展博","雪丽","哲恒","慧妍
                 $kulg1 = $_GET['kulg1'];
                 $kulg2 = $_GET['kulg2'];
                 if ($kulg1 == $kulg2) {
-                    $ruut = "img/ruut.png";
+                    echo "On ruut";
+                    }else{
+                    echo "On ristkülik";
+                        }
                     echo "<br>";
-                    echo "<img src=$ruut alt=img width=200 height=200>";
                 }
                 else {
                     $ristkulik = "img/Ristkulik.png";
                     echo "<br>";
                     echo "<img src=$ristkulik alt=img width=400 height=200>";
                 }
-            }
+            
         ?>
         <p></p>
         <h3>Juubel</h3>
