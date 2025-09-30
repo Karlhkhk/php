@@ -7,33 +7,66 @@
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.8/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-sRIl4kxILFvY47J16cr9ZwB07vP4J8+LH7qKQnuqkuIAvNWLzeN8tE5YBujZqJLB" crossorigin="anonymous">
   </head>
   <body>
-    <h2>Harjutus 13</h2>
+     <div class="container">
         <?php
-            function jpgfali(){
-      echo '<form action="#" method="post" enctype="multipart/form-data">
-      <input type="file" name="minu_fail"><br>
-      <input type="submit" value="Lae üles!">
-      </form>';
-      if(!empty($_FILES['minu_fail']['name'])){
-	      $sinu_faili_nimi = $_FILES['minu_fail']['name'];
-	      $ajutine_fail= $_FILES['minu_fail']['tmp_name'];
-	      $faili_suurus = $_FILES['minu_fail']['size'];
-	      $max_suurus = 10048576;
-	      $faili_tyyp = $_FILES['minu_fail']['type'];
-	      if($faili_suurus <= $max_suurus && $faili_tyyp=='image/jpeg' || $faili_tyyp=='image/jpg'){
-	      	$kataloog = 'failid';
-	      	$faili_koht = $kataloog.'/'.$sinu_faili_nimi;	
-	      	if(!file_exists($faili_koht) && move_uploaded_file($ajutine_fail, $kataloog.'/'.$sinu_faili_nimi)){
-	      		echo 'Faili üleslaadimine oli edukas'."<br>";	
-	      	} else {
-	      		echo 'Faili üleslaadimine ebaõnnestus'."<br>";
-	      	}
-	      } else {
-	      	echo 'Faili ei laetud üles!'."<br>";
-	      }
-      }
+            $kataloog = 'pildid';
+
+            if ($_SERVER['REQUEST_METHOD'] === 'POST' && !empty($_FILES['minu_fail']['name'])) {
+                $sinu_faili_nimi = $_FILES['minu_fail']['name'];
+                $ajutine_fail = $_FILES['minu_fail']['tmp_name'];
+                $faili_tyyp = $_FILES['minu_fail']['type'];
+
+                if ($faili_tyyp === 'image/jpeg' || $faili_tyyp === 'image/jpg') {
+                    move_uploaded_file($ajutine_fail, $kataloog . '/' . $sinu_faili_nimi);
+                    echo '<div class="alert alert-success">Fail üles laetud!</div>';
+                } else {
+                    echo '<div class="alert alert-danger">Ainult JPG ja JPEG failid on lubatud!</div>';
+                }
             }
         ?>
+
+        <form action="" method="post" enctype="multipart/form-data">
+            <div class="mb-3">
+                <label for="inputGroupFile01" class="form-label">Vali pilt:</label>
+                <input type="file" name="minu_fail" class="form-control" id="inputGroupFile01" required>
+            </div>
+            <input type="submit" class="btn btn-primary" value="Lae üles!">
+        </form>
+
+        <hr>
+
+        <h2>Üleslaetud pildid:</h2>
+
+        <?php
+            if (is_dir($kataloog)) {
+                $asukoht = opendir($kataloog);
+                while (($fail = readdir($asukoht)) !== false) {
+                    if ($fail !== '.' && $fail !== '..') {
+                        echo '<a href="' . htmlspecialchars($kataloog . '/' . $fail) . '" target="_blank">';
+                        echo '<img src="' . htmlspecialchars($kataloog . '/' . $fail) . '" style="height:400px; margin:5px;" alt="Uploaded Image">';
+                        echo '</a>';
+                    }
+                }
+                closedir($asukoht);
+            }
+        ?>
+
+    <h1>Harjutus 14</h1>
+
+<?php
+$directory = 'pildid/';
+
+$images = glob($directory . '*.{jpg,jpeg}', GLOB_BRACE);
+
+if (count($images) > 0) {
+    $randomImage = $images[array_rand($images)];
+    
+    // Parandatud img element
+    echo '<img src="' . $randomImage . '" alt="Random Image" width="200" height="200">';
+} else {
+    echo 'ei ole pilti siin.';
+}
+?>
  <h1>Harjutus 12.1</h1>
 <?php
 $allikas = 'tootajad.csv';
@@ -448,21 +481,147 @@ $hiinanimi = array("瀚聪","月松","雨萌","展博","雪丽","哲恒","慧妍
     }
 
     ?>
+ <h3>Harjutus 4</h3>
+        <form method="get">
+            a <input type="number" name="a"><br>
+            b <input type="number" name="b"><br>
+            <input type="submit" value="Saada">
+        </form>
+        <?php
+            if (isset($_GET['a']) && isset($_GET['b'])) {
+                $a = $_GET['a'];
+                $b = $_GET['b'];
+                $jagamine = $a / $b;
+                echo "Arvude jagaja on: ", $jagamine, "<br>";
+            }
+        ?>
+        <p></p>
+        <h3>Vanus</h3>
+        <form method="get">
+            1. Vanus <input type="number" name="vanus1"><br>
+            2. Vanus <input type="number" name="vanus2"><br>
+            <input type="submit" value="Saada">
+        </form>
+        <?php
+            if (isset($_GET['vanus1']) && isset($_GET['vanus2'])) {
+                $vanus1 = $_GET['vanus1'];
+                $vanus2 = $_GET['vanus2'];
+                if ($vanus1 < $vanus2) {
+                    echo "2. vanus on vanem kui 1. vanus.";
+                }
+                else if ($vanus2 < $vanus1) {
+                    echo "1. vanus on vanem kui 2. vanus.";
+                }
+                else {
+                    echo "Sama vanad";
+                }
+            }
+        ?>
+        <p></p>
+        <h3>Ruudu validaator</h3>
+        <form method="get">
+            1. Külg <input type="number" name="kulg1"><br>
+            2. Külg <input type="number" name="kulg2"><br>
+            <input type="submit" value="Saada">
+        </form>
+        <?php
+            if (isset($_GET['kulg1']) && isset($_GET['kulg2'])) {
+                $kulg1 = $_GET['kulg1'];
+                $kulg2 = $_GET['kulg2'];
+                if ($kulg1 == $kulg2) {
+                    echo "Kujund on ruut.";
+                }
+                else {
+                    echo "Kujund on ristkülik.";
+                }
+            }
+        ?>
+        <p></p>
+        <h3>Ruudu validaator - Graafiline</h3>
+        <form method="get">
+            1. Külg <input type="number" name="kulg1"><br>
+            2. Külg <input type="number" name="kulg2"><br>
+            <input type="submit" value="Saada">
+        </form>
+        <?php
+            if (isset($_GET['kulg1']) && isset($_GET['kulg2'])) {
+                $kulg1 = $_GET['kulg1'];
+                $kulg2 = $_GET['kulg2'];
+                if ($kulg1 == $kulg2) {
+                    $ruut = "img/ruut.png";
+                    echo "<br>";
+                    echo "<img src=$ruut alt=img width=200 height=200>";
+                }
+                else {
+                    $ristkulik = "img/Ristkulik.png";
+                    echo "<br>";
+                    echo "<img src=$ristkulik alt=img width=400 height=200>";
+                }
+            }
+        ?>
+        <p></p>
+        <h3>Juubel</h3>
+        <form method="get">
+            Sünnipäev <input type="number" name="sunnipaev"><br>
+            <input type="submit" value="Saada">
+        </form>
+        <?php
+            if (isset($_GET['sunnipaev'])) {
+                $sunnipaev = $_GET['sunnipaev'];
+                $aasta = 2025;
+                $vanus = $sunnipaev - $aasta;
+                $jaak = $vanus % 5;
+                if ($jaak == 0) {
+                    echo "Sul on juubli aasta.";
+                }
+                else {
+                    echo "Sul ei ole juubel veel.";
+                }
+            }
+        ?>
+        <p></p>
+        <h3>Punktide hinded</h3>
+        <form method="get">
+            Punktide arv: <input type="number" name="punktid"><br>
+            <input type="submit" value="Saada">
+        </form>
+        <?php
+            if (isset($_GET['punktid'] )&& !empty($_GET['punktid'])) {
+                $punktid = $_GET['punktid'];
+                if ($punktid >= 10) {
+                    echo "Tubli";
+                }
+                else if ($punktid >= 5 && $punktid <= 9){
+                    echo "Korras";
+                }
+                else if ($punktid < 5 && $punktid >= 0) {
+                    echo "HALB!!";
+                }
+                else {
+                    echo "SISESTA OMA PUNKTID!!!";
+                }
+            }
+        ?>
+    
+   	<h1>Harjutus 3</h1>
+		<form method="get">
+			a <input type="text" name="a"><br>
+			b <input type="text" name="b"><br>
+			h <input type="text" name="h"><br>
+        <input type="submit" value="Saada">
+		</form>
 
-     <h2> Harjutus 03 </h2>
-
-  <?php
-$alus1 = $_GET['alus1'];
-$alus2 = $_GET['alus2'];
-$kõrgus = $_GET['kõrgus'];
-$külg = $_GET['külg'];
-
-$trapetsi_pindala = (($alus1 + $alus2) / 2) * $kõrgus;
-$rombi_ümbermõõt = 4 * $külg;
-
-echo "Trapetsi pindala: " . round($trapetsi_pindala, 1) . "<br>";
-echo "Rombi ümbermõõt: " . round($rombi_ümbermõõt, 1) . "<br>";
-?>
+				<?php
+					if (isset($_GET['a']) && isset($_GET['b']) && isset($_GET['h'])) {
+						$a = $_GET['a'];
+						$b = $_GET['b'];
+						$h = $_GET['h'];
+						$trapetsipindala = (($a + $b) * $h) /2;
+						$rombiumbermoot = 4 * $a;
+						echo "Rombiümbermõõt on: ",$rombiumbermoot,"<br>";
+						echo "Trapetsipindala on: ",$trapetsipindala, "<br>";
+					}
+				?>
    <h2> Harjutus 02 </h2>
 
 <?php
@@ -515,6 +674,6 @@ echo '"It’s My Life" – Dr. Alban<br>';
 echo "<pre>
     (\\(\\
     ( -.-)
-    o_(\")(\")
+    o_(\")(\")s
 </pre>";
 ?>
