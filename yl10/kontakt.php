@@ -1,0 +1,2 @@
+<h1>Kontakt</h1>
+<p>Cras justo mauris, iaculis nec elit sit amet, cursus feugiat metus. Donec posuere facilisis ante, et scelerisque arcu vulputate at. Praesent tincidunt egestas libero, eget scelerisque leo congue a. Duis quis nulla turpis.</p>
