@@ -57,8 +57,9 @@
     jpgfali();
 ?>
      <h1>Harjutus 9.3</h1>
- <!-- Email -->
-    <?php
+<!-- email -->
+
+<?php
     function email(){
         echo'    <form action="#" method="get">
             Sisestage oma nimi <input type="text" name="nimi" required><br>
@@ -75,7 +76,6 @@
     }
     email()
     ?>
-
     <?php
     date_default_timezone_set('Europe/Tallinn');
     function roppus(){
@@ -124,6 +124,7 @@
             echo "Tere, $sonumucd!";
         }
     }
+
     sonum()
     ?>
     <h1>Harjutus 08</h1>
@@ -158,7 +159,7 @@
       function tervita() {
         echo ("päiksekesekene");
       }
-//Uudiskiri
+// Uudiskiri
       function uudiskiri() {
         echo '<div class="row">
           <div class="col-sm-2">
@@ -327,7 +328,7 @@ echo "<br>";
             $viimanehiinanimi = count($hiinanimed)-1;
             echo $hiinanimed[$viimanehiinanimi];
 
-//google
+// google
      $google = array("Feake", "Bradwell", "Dreger", "Bloggett", "Lambole", "Daish", "Lippiett", "Blackie", "Stollenbeck", "Houseago", "Dugall", "Sprowson", "Kitley", "Mcenamin", "Allchin", "Doghartie", "Brierly", "Pirrone", "Fairnie", "Seal", "Scoffins", "Galer", "Matevosian", "DeBlase", "Cubbin", "Izzett", "Ebi", "Clohisey", "Prater", "Probart", "Samwaye", "Concannon", "MacLure", "Eliet", "Kundt", "Reyes");
 
             if (isset($_GET['googl'])) {
@@ -345,7 +346,7 @@ echo "<br>";
         <input type="submit" value="Eemalda firma">
     </form>
 <?php
-//firmad
+// firmad
 echo"<br>";
 
 
@@ -359,9 +360,8 @@ foreach ($firmad as $firma) {
     echo $firma."<br>";
 }
 ?>
-
+<!-- Autod -->
 <?php
-//autod
     $cars = array("Subaru","BMW","Acura","Mercedes-Benz","Lexus","GMC","Volvo","Toyota","Volkswagen","Volkswagen","GMC","Jeep","Saab","Hyundai","Subaru","Mercedes-Benz",
 "Honda","Kia","Mercedes-Benz","Chevrolet","Chevrolet","Porsche","Buick","Dodge","GMC","Dodge","Nissan","Dodge","Jaguar","Ford","Honda","Toyota","Jeep",
 "Kia","Buick","Chevrolet","Subaru","Chevrolet","Chevrolet","Pontiac","Maybach","Chevrolet","Plymouth","Dodge","Nissan","Porsche","Nissan","Mercedes-Benz",
@@ -448,7 +448,7 @@ foreach ($vins as $vin) {
             }
         ?>
         <p></p>
-        <h3>Vanus</h3>
+            <!-- Vanus -->
         <form method="get">
             1. Vanus <input type="number" name="vanus1"><br>
             2. Vanus <input type="number" name="vanus2"><br>
@@ -470,7 +470,7 @@ foreach ($vins as $vin) {
             }
         ?>
         <p></p>
-        <h3>Ruudu validaator</h3>
+        <!-- Ruudu validaator -->
         <form method="get">
             1. Külg <input type="number" name="kulg1"><br>
             2. Külg <input type="number" name="kulg2"><br>
@@ -489,7 +489,7 @@ foreach ($vins as $vin) {
             }
         ?>
         <p></p>
-        <h3>Ruudu validaator - Graafiline</h3>
+<!-- Ruudu validaator - Graafiline -->
         <form method="get">
             1. Külg <input type="number" name="kulg1"><br>
             2. Külg <input type="number" name="kulg2"><br>
@@ -500,19 +500,15 @@ foreach ($vins as $vin) {
                 $kulg1 = $_GET['kulg1'];
                 $kulg2 = $_GET['kulg2'];
                 if ($kulg1 == $kulg2) {
-                    $ruut = "img/ruut.png";
-                    echo "<br>";
-                    echo "<img src=$ruut alt=img width=200 height=200>";
+                         echo "Kujund on ruut.";
                 }
                 else {
-                    $ristkulik = "img/Ristkulik.png";
-                    echo "<br>";
-                    echo "<img src=$ristkulik alt=img width=400 height=200>";
+                    echo "Kujund on ristkülik.";
                 }
             }
         ?>
         <p></p>
-        <h3>Juubeli kalkulaator</h3>
+<!-- Juubeli kalkulaator -->
         <form method="get">
             Sünnipäev <input type="number" name="sunnipaev"><br>
             <input type="submit" value="Saada">
@@ -532,7 +528,7 @@ foreach ($vins as $vin) {
             }
         ?>
         <p></p>
-        <h3>Punktide hinnete kontroll</h3>
+<!-- Punktide hinnete kontroll -->
         <form method="get">
             Punktide arv: <input type="number" name="punktid"><br>
             <input type="submit" value="Saada">
